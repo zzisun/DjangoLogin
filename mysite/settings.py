@@ -142,7 +142,7 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend',
 )
-SITE_ID=1
+SITE_ID=2
 
 # auth 로그인 후 mypage로 이동
 ACCOUNT_AUTHENTICATED_LOGIN_REDIRECTS = True

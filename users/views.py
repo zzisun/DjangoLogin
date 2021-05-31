@@ -1,8 +1,8 @@
 from django.contrib.auth.hashers import make_password
 from users.models import User
-from users.forms import RegisterForm
+from users.forms import RegisterForm, UserCreationForm
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login, logout, models
 from django.contrib import messages
 
 
@@ -12,21 +12,23 @@ def home(request):
 def mypage(request):
     return render(request, "users/status.html")
 
-def registerPage(request):
-	form = RegisterForm()
-	if request.method == 'POST':
-			form = RegisterForm(request.POST)
-			user = User(
-           		email=form.data.get('email'),
-            	name=form.data.get('name'),
-            	password=make_password(form.data.get('password')),
-            	level='user'
-        	)
-			user.save()
-			username = form.cleaned_data.get('first_name')
-			messages.success(request, 'Account was created for ' + user)
+def verifyAccount(request):
+    return render(request, "users/sign_up2.html")
 
+def registerPage(request):
+	if request.method == 'POST':
+		form = UserCreationForm(request.POST)
+		if form.is_valid():
+			form.save()
+			# new_user = models.User.objects.create_user(**form.cleaned_data)
+			# login(request, new_user)
+			username = form.cleaned_data.get('first_name')
+			messages.success(request, 'Account was created for ' + username)
 			return redirect('verify')
+		else:
+			print("error")
+	else:
+		form = UserCreationForm()
 	context = {'form':form}
 	return render(request, 'users/sign_up1.html', context)
 
