@@ -24,7 +24,7 @@ def registerPage(request):
         	)
 			user.save()
 			username = form.cleaned_data.get('first_name')
-			messages.success(request, 'Account was created for ' + user)
+			messages.success(request, 'Account was created for ' + username)
 
 			return redirect('verify')
 	context = {'form':form}
