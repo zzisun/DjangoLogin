@@ -24,7 +24,6 @@ def registerPage(request):
 			# login(request, new_user)
 			username = form.cleaned_data.get('first_name')
 			messages.success(request, 'Account was created for ' + username)
-			return redirect('verify')
 		else:
 			print("error")
 	else:
